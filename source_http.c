@@ -20,7 +20,7 @@ int main(){
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     struct sockaddr addr;
-    bind(sockfd, &addr, sizeof(struct sockaddr));
+    int bind_result = bind(sockfd, &addr, sizeof(struct sockaddr));
     // memset();
     
     if (sockfd < 0)
@@ -30,9 +30,7 @@ int main(){
         exit(-1);
     }
 
-
-
-    for(int i = 0;i < 5; i++){
+    for(int i = 0;i < 6; i++){
         // a request to recieve must be recieved here!
         printf("Witing for response.......\n");
         Sleep(1000);
