@@ -10,6 +10,7 @@
                 "/nologo",
                 "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${file}"
+                "-lws2_32"
             ],
             "options": {
                 "cwd": "${fileDirname}"

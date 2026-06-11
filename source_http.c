@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
+
 #include <winsock2.h>
+#include <WS2tcpip.h>
+
 #include <stdlib.h>
 #include <Windows.h>
 
@@ -20,6 +23,7 @@ int main(){
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     struct sockaddr addr;
+    
     int bind_result = bind(sockfd, &addr, sizeof(struct sockaddr));
     // memset();
     
