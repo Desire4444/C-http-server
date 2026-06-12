@@ -21,11 +21,6 @@ int main(){
 
     // 2.>>>Creating a socket now!
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-    struct sockaddr addr;
-    
-    int bind_result = bind(sockfd, &addr, sizeof(struct sockaddr));
-    // memset();
     
     if (sockfd < 0)
     {
@@ -33,6 +28,27 @@ int main(){
         WSACleanup();
         exit(-1);
     }
+    
+    struct addrinfo hints, *res;
+    memset(&hints, 0, sizeof(hints));
+
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_PASSIVE;
+
+    getaddrinfo(NULL, "8080", &hints, &res);
+    
+    int bind_result = bind(sockfd, res->ai_addr, res->ai_addrlen);
+    printf("Bind result is: %d\n", bind_result);
+
+    // Listen for incomming connections
+    int listen_result = listen(sockfd, 20);
+    if (listen_result < 0)
+    {
+        printf("Listenning error. Error code: %d\n", WSAGetLastError());
+        exit(-1);
+    }
+    
 
     for(int i = 0;i < 6; i++){
         // a request to recieve must be recieved here!
