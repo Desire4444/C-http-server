@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRX | MASTER RANKINGS</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    <meta name="theme-color" content="#00f2ff">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Optimization: Ensure modal background renders efficiently */
+        #modalContainer {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #000; /* Fallback while image loads */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-content">
+            <div class="dragon-symbol">龙</div>
+            <div class="loader-bar"></div>
+            <p>INITIALIZING FRX SYSTEM...</p>
+        </div>
+    </div>
+
+    <nav>
+        <div class="brand"><span>龙</span> FRX FRACTURE</div>
+        <div class="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="leaderboard.html" class="active">LEADERBOARD</a>
+            <a href="join.html">JOIN US</a>
+            <a href="contact.html">CONTACT</a>
+            <a href="wars.html">WAR RECORDS</a>
+        </div>
+    </nav>
+
+    <section style="padding: 110px 5% 50px;">
+        <h2 class="section-title">CLAN LEADERBOARD</h2>
+
+        <div class="leader-section">
+            <div class="leader-card zandex-card">
+                <img src="images/zandex.jpeg" class="leader-img-circle" alt="Leader" onerror="this.src='images/zandex.jpg'">
+                <h3 class="player-name">龙 Zandex</h3>
+                <p style="color: rgb(0, 34, 255); font-size: 10px; font-family: 'Orbitron'; letter-spacing: 2px;">CLAN LEADER</p>
+            </div>
+            
+            <div class="leader-card vice-card">
+                <img src="images/vice.jpg" class="leader-img-circle" alt="Vice Leader">
+                <h3 class="player-name">龙 Prime</h3>
+                <p style="color: rgb(119, 4, 208); font-size: 10px; font-family: 'Orbitron'; letter-spacing: 2px;">VICE LEADER</p>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="playerSearch" class="rank-search" placeholder="SEARCH MEMBERS NAME..." onkeyup="filterPlayers()">
+        </div>
+
+        <div class="clan-toggle">
+            <button class="toggle-btn rounded active" onclick="showClan(1)">CLAN 1</button>
+            <button class="toggle-btn rounded" onclick="showClan(2)">CLAN 2</button>
+        </div>
+
+        <div id="clan1-list" class="rank-grid">
+            
+            <div class="list-row player-item clickable" onclick="openProfile('GlORY', '13,155', 'LEGEND II', 'images/glory.jpg')">
+                <div class="list-rank">#02</div>
+                <img src="images/Members/2.jpg" class="list-img" loading="lazy" onerror="this.src='images/Members/2.jpg'">
+                <div class="list-name">龙 GlORY</div>
+                <div class="list-stats">
+                    <span class="list-points">13,155</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('Death Note', '12,900', 'LEGEND II', 'images/dethnote.jpg')">
+                <div class="list-rank">#03</div>
+                <img src="images/dethnote.jpg" class="list-img" loading="lazy" onerror="this.src='images/dethnote.jpg'">
+                <div class="list-name">龙 Death Note</div>
+                <div class="list-stats">
+                    <span class="list-points">12,900</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('Nono', '11,450', 'LEGEND I', 'images/Members/2.jpg')">
+                <div class="list-rank">#04</div>
+                <img src="images/Members/2.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">龙 Nono</div>
+                <div class="list-stats">
+                    <span class="list-points">11,450</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('Zelda', '10,800', 'GRANDMASTER V', 'images/Members/3.jpg')">
+                <div class="list-rank">#05</div>
+                <img src="images/Members/3.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">龙 Zelda</div>
+                <div class="list-stats">
+                    <span class="list-points">10,800</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('Israel', 'PENDING', 'UNVERIFIED', 'images/Israel.jpg')">
+                <div class="list-rank">#06</div>
+                <img src="images/Israel.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">Israel <span style="color:#ff4444; font-size:8px;">[UNVERIFIED]</span></div>
+                <div class="list-stats">
+                    <span class="list-points">----</span>
+                    <span class="list-tier" style="color:#ff4444;">RESTRICTED</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('M|阿克雷尔', '9,500', 'GRANDMASTER II', 'images/Members/4.jpg')">
+                <div class="list-rank">#07</div>
+                <img src="images/Members/4.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">M|阿克雷尔</div>
+                <div class="list-stats">
+                    <span class="list-points">9,500</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+            <div class="list-row player-item clickable" onclick="openProfile('nemÉs1x', '8,900', 'DIAMOND I', 'images/glory.jpg')">
+                <div class="list-rank">#08</div>
+                <img src="images/glory.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">nemÉs1x</div>
+                <div class="list-stats">
+                    <span class="list-points">8,900</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+
+        </div>
+
+        <div id="clan2-list" class="rank-grid" style="display: none;">
+            <div class="list-row player-item clickable" onclick="openProfile('EMI NOON', '7,958', 'DIAMOND I', 'images/israel.jpg')">
+                <div class="list-rank">#01</div>
+                <img src="images/israel.jpg" class="list-img" loading="lazy" onerror="this.src='images/default.jpg'">
+                <div class="list-name">EmiNoon</div>
+                <div class="list-stats">
+                    <span class="list-points">7,958</span>
+                    <span class="list-tier">TAP TO VIEW</span> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="playerModal" class="modal">
+        <div class="modal-content-landscape" id="modalContainer">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modalData"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://discord.gg/nYF2F32E8T" class="social-icon" target="_blank"><i class="fab fa-discord"></i><span>Discord</span></a>
+            <a href="https://www.tiktok.com/@fracture_esports" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i><span>TikTok</span></a>
+            <a href="https://chat.whatsapp.com/DBjDvU5sd6rA4anDeY8neo" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
+        </div>
+        <p class="copyright">© 2026 FRX FRACTURE | ELITE GAMING DIVISION</p>
+    </footer>
+
+    <a href="https://chat.whatsapp.com/DBjDvU5sd6rA4anDeY8neo" class="floating-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+           // 1. Optimized Search (Handles Symbols & Spaces better)
+    function filterPlayers() {
+        const input = document.getElementById('playerSearch').value.toLowerCase().trim();
+        const players = document.querySelectorAll('.player-item');
+        
+        players.forEach(player => {
+            const name = player.querySelector('.list-name').innerText.toLowerCase();
+            // This checks if the search text exists anywhere in the name
+            if (name.includes(input)) {
+                player.style.display = "grid";
+            } else {
+                player.style.display = "none";
+            }
+        });
+    }
+
+    // 2. Clan Toggle Logic
+    function showClan(num) {
+        const c1 = document.getElementById('clan1-list');
+        const c2 = document.getElementById('clan2-list');
+        const btns = document.querySelectorAll('.toggle-btn');
+        
+        if (num === 1) {
+            c1.style.display = 'flex';
+            c2.style.display = 'none';
+            btns[0].classList.add('active');
+            btns[1].classList.remove('active');
+        } else {
+            c1.style.display = 'none';
+            c2.style.display = 'flex';
+            btns[0].classList.remove('active');
+            btns[1].classList.add('active');
+        }
+    }
+
+    // 3. Profile Logic (Enhanced for reliability)
+    function openProfile(name, points, tier, img) {
+        const modal = document.getElementById("playerModal");
+        const modalContainer = document.getElementById("modalContainer");
+        const modalData = document.getElementById("modalData");
+
+        // Apply background with a fallback check
+        modalContainer.style.backgroundImage = `linear-gradient(to right, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.2)), url('${img}')`;
+        
+        modalData.innerHTML = `
+            <div class="landscape-profile-content">
+                <div class="profile-main-info">
+                    <img src="${img}" class="profile-avatar-square" onerror="this.src='images/default.jpg'">
+                    <div class="profile-text">
+                        <h2 style="font-family: 'Orbitron'; color: #fff; margin: 0;">${name}</h2>
+                        <p style="color: #00f2ff; font-size: 10px; font-family: 'Orbitron'; letter-spacing: 2px;">FRX OFFICIAL MEMBER</p>
+                    </div>
+                </div>
+                <div class="profile-stats-landscape">
+                    <div class="stat-box">
+                        <p>POINTS</p>
+                        <span>${points}</span>
+                    </div>
+                    <div class="stat-box">
+                        <p>RANK</p>
+                        <span>${tier}</span>
+                    </div>
+                </div>
+                <button class="btn-main-small" onclick="closeModal()">BACK TO LIST</button>
+            </div>
+        `;
+        modal.style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("playerModal").style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById("playerModal");
+        if (event.target == modal) closeModal();
+    }
+
+    // Mobile Nav
+    document.querySelector('.hamburger').addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Loader
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            document.getElementById("loader").classList.add("loader-hidden");
+        }, 1000); 
+    });
+
+    </script>
+</body>
+</html>

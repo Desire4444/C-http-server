@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRX SCRIM | HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon: #00f2ff;
+            --red: #ff0050;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background: var(--bg);
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .tag {
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--neon);
+            border-bottom: 1px solid var(--neon);
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Admin Trigger */
+        .admin-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 999;
+            filter: grayscale(1);
+            transition: 0.3s;
+        }
+        .admin-trigger:hover { filter: grayscale(0); transform: scale(1.2); }
+
+        /* Admin Overlay */
+        .admin-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            padding: 10px;
+            margin-top: 5px;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            box-sizing: border-box;
+        }
+
+        .glow-btn {
+            background: var(--neon);
+            color: black;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-weight: 900;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(0,242,255,0.3);
+        }
+
+        /* Hide buttons unless logged in */
+        .admin-only-btn { display: none; }
+        body.is-admin .admin-only-btn { display: block; }
+
+        #admin-toast {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--neon);
+            color: black;
+            padding: 10px 25px;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            z-index: 10001;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="admin-toast">SYSTEM_ALERT: WAITING...</div>
+
+    <div style="max-width: 1000px; margin: auto; padding: 40px 20px;">
+        
+        <header style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-family: 'Orbitron'; font-size: 2.5rem; margin: 0; letter-spacing: 5px;">FRX <span style="color: var(--neon);">SCRIM</span></h1>
+            <div id="status-mount"></div>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 300px; gap: 20px;">
+            
+            <section>
+                <div id="js-info" class="glass-card"></div>
+                <div class="glass-card">
+                    <div class="tag">BROADCASTS</div>
+                    <div id="js-news-feed"></div>
+                </div>
+            </section>
+
+            <aside>
+                <div id="js-slots" class="glass-card"></div>
+                <div id="js-blacklist" class="glass-card" style="border-color: rgba(255,0,80,0.2);">
+                    <div class="tag" style="color: var(--red);">BLACKLIST 💀</div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
+
+    <div id="admin-panel" class="admin-overlay">
+        <div class="glass-card" style="width: 360px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--neon);">
+            
+            <div id="login-section">
+                <div class="tag">SECURE_LOGIN</div>
+                <input type="password" id="admin-pass" placeholder="ENTER ACCESS CODE">
+                <button class="glow-btn" onclick="checkAuth()">AUTHORIZE</button>
+                <button onclick="toggleAdmin()" style="background:none; border:none; color:#555; width:100%; margin-top:10px; cursor:pointer;">EXIT</button>
+            </div>
+
+            <div id="controls-section" style="display: none;">
+                <div class="tag">SYSTEM_COMMAND</div>
+                
+                <label>SCRIM STATUS</label>
+                <select id="edit-online">
+                    <option value="true">ONLINE</option>
+                    <option value="false">OFFLINE</option>
+                </select>
+
+                <label>MAX SLOTS</label>
+                <input type="number" id="edit-slots" placeholder="16">
+
+                <label>MODE & MAP</label>
+                <input type="text" id="edit-mode" placeholder="SQUAD / SHUTTER ISLAND">
+
+                <label>FOOTER TICKER</label>
+                <textarea id="edit-footer-news"></textarea>
+
+                <button id="sync-btn" class="glow-btn" onclick="updateLive()">SYNC_TO_SITE</button>
+
+                <hr style="border:0; border-top:1px solid #222; margin:20px 0;">
+
+                <div class="tag">ADD_BROADCAST</div>
+                <input type="text" id="new-news-title" placeholder="TITLE">
+                <textarea id="new-news-body" placeholder="MESSAGE BODY"></textarea>
+                <button class="glow-btn" style="background:none; border:1px solid var(--neon); color:var(--neon);" onclick="postNews()">SEND_TO_HUB</button>
+                
+                <div id="js-admin-news-list" style="margin-top:10px; max-height:100px; overflow-y:auto;"></div>
+
+                <hr style="border:0; border-top:1px solid #222; margin:20px 0;">
+
+                <div class="tag" style="color: var(--red);">BLACKLIST_COMMAND</div>
+                <input type="text" id="ban-player-name" placeholder="PLAYER NAME">
+                <input type="text" id="ban-reason" placeholder="REASON">
+                <button class="glow-btn" style="background:var(--red); color:white;" onclick="addBan()">EXECUTE_BAN</button>
+
+                <button onclick="toggleAdmin()" style="background:none; border:none; color:#555; width:100%; margin-top:20px; cursor:pointer;">DISCONNECT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scrim-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; align-items:center; justify-content:center;">
+        <div style="background:#0a0a0a; border:1px solid var(--neon); padding:25px; border-radius:15px; width:90%; max-width:400px; text-align:center;">
+            <h2 id="modal-title" style="color:var(--neon); font-family: 'Orbitron'; font-size: 1rem;">SYSTEM_ALERT</h2>
+            <p id="modal-body" style="color:#aaa; font-size:0.8rem; margin-bottom:20px;"></p>
+            <input type="text" id="modal-input" style="display:none; margin-bottom: 20px;">
+            <div style="display:flex; gap:10px;">
+                <button id="modal-confirm-btn" style="flex:1; padding:12px; background:var(--neon); border:none; font-family:'Orbitron'; font-weight:bold; cursor:pointer;">CONFIRM</button>
+                <button onclick="closeModal()" style="flex:1; padding:12px; background:#222; border:none; color:white; font-family:'Orbitron'; cursor:pointer;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    
+    <script src="scrim-logic.js"></script>
+</body>
+</html>
